@@ -15,6 +15,6 @@ galaxy_info:
         # 16.04
         - xenial
 
-galaxy_tags: []
+  galaxy_tags: []
 
 dependencies: []
