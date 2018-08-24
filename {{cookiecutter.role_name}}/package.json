@@ -1,0 +1,61 @@
+{
+    "name": "{{ cookiecutter.role_name }}",
+    "version": "1.0.0",
+    "description": "{{ cookiecutter.description }}",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://github.com/trustedshops/{{ cookiecutter.role_name }}.git"
+    },
+    "author": "{{ cookiecutter.author }}",
+    "license": "{{ cookiecutter.license }}",
+    "bugs": {
+        "url": "https://github.com/trustedshops/{{ cookiecutter.role_name }}/issues"
+    },
+    "homepage": "https://github.com/trustedshops/{{ cookiecutter.role_name }}#readme",
+    "scripts": {
+        "commitmsg": "commitlint -e $GIT_PARAMS",
+        "precommit": "yamllint -c ./.yamllint . && ansible-lint -R -r ./node_modules/ansible-lint-rules/rules . || exit 1",
+        "develop": "nodemon"
+    },
+    "commitlint": {
+        "extends": [
+            "./node_modules/@commitlint/config-conventional"
+        ]
+    },
+    "nodemonConfig": {
+        "exec": "yamllint -c ./.yamllint . && ansible-lint -R -r ./node_modules/ansible-lint-rules/rules . || exit 1",
+        "ext": "yml"
+    },
+    "release": {
+        "verifyConditions": [
+            "@semantic-release/github"
+        ],
+        "prepare": [
+            {
+                "path": "@semantic-release/changelog",
+                "changelogFile": "CHANGELOG.md"
+            },
+            {
+                "path": "@semantic-release/git",
+                "assets": "CHANGELOG.md"
+            }
+        ],
+        "publish": [
+            "@semantic-release/github",
+            {
+                "path": "semantic-release",
+                "name": "trustedshops/ansible-hardening-base"
+            }
+        ],
+        "tagFormat": "${version}"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^6.1.2",
+        "@commitlint/config-conventional": "^6.1.2",
+        "@semantic-release/exec": "^2.0.1",
+        "husky": "^0.14.3",
+        "semantic-release": "^13.4.1",
+        "nodemon": "^1.17.1",
+        "ansible-lint-rules": "^1.0.1"
+    }
+}

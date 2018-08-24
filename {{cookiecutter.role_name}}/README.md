@@ -1,38 +1,40 @@
-Role Name
+{{ cookiecutter.role_name | title | replace("-", " ") }}
 =========
 
-A brief description of the role goes here.
+This is a rule to setup {{ cookiecutter.role_name | title | replace("ansible-", "") | replace("-", " ") }} on a unix system
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+All python requirements are in `requirements.txt`
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+All role variables can be found in `defaults/main.yml`
 
-Dependencies
+Role Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+All role dependencies can be found in `meta/main.yml`
 
-Example Playbook
+Test Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+If you want to know what is tested through [molecule](https://molecule.readthedocs.io/en/master/) see:
 
-    - hosts: servers
-      roles:
-         - { role: {{ cookiecutter.role_name }}, x: 42 }
+- `molecule/default/molecule.yml` for OSes we test against
+- `molecule/default/playbook.yml` for what is being run in the test
+- `molecule/default/tests/test_default.yml` for the [goss](https://goss.rocks) verfier
 
-License
--------
+Contribute
+==========
 
-BSD
+[Tutorial](http://kbroman.github.io/github_tutorial/pages/fork.html)
 
-Author Information
-------------------
+License and Author
+==================
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Author:: {{ cookiecutter.author }}
+
+Trustedshops GmbH {{ cookiecutter.license }}

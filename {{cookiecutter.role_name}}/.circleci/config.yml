@@ -1,0 +1,75 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:stable
+    working_directory: ~/{{ cookiecutter.role_name }}
+
+    steps:
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - checkout:
+          path: ~/{{ cookiecutter.role_name }}
+
+      - run:
+          name: "Install pip"
+          command: "apk add --update python python-dev py-pip build-base openssl
+                    openssl-dev libffi-dev linux-headers"
+
+      - run:
+          name: "Install python dependencies"
+          command: "pip install -r requirements.txt"
+
+      - run:
+          name: "run tests"
+          command: "export DOCKER_TLS=true &&
+                    export DOCKER_CERT_PATH_CA=$DOCKER_CERT_PATH/ca.pem &&
+                    export DOCKER_CERT_PATH_CERT=$DOCKER_CERT_PATH/cert.pem &&
+                    export DOCKER_CERT_PATH_KEY=$DOCKER_CERT_PATH/key.pem &&
+                    export DOCKER_SSL_VERSION=SSLv23 &&
+                    molecule test"
+
+  release:
+    docker:
+      - image: circleci/node:8
+
+    working_directory: ~/{{ cookiecutter.role_name }}
+
+    steps:
+
+      - checkout:
+          path: ~/{{ cookiecutter.role_name }}
+
+      - run: "npm install @semantic-release/changelog &&
+              npm install @semantic-release/git &&
+              npx semantic-release"
+
+workflows:
+  version: 2
+
+  commit-workflow:
+    jobs:
+      - build
+      - release:
+          context: ansible-roles
+          requires:
+            - build
+
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 0"
+          filters:
+            branches:
+              only:
+                - master
+
+    jobs:
+      - build
+      - release:
+          context: ansible-roles
+          requires:
+            - build

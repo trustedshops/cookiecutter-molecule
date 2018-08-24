@@ -1,20 +1,39 @@
 ---
 dependency:
-  name: gilt
+  name: galaxy
+  options:
+    role-file: requirements.yml
 driver:
   name: docker
 lint:
   name: yamllint
 platforms:
-  - name: instance-1
-    image: centos:7
+  - name: {{ cookiecutter.role_name }}-1804
+    image: solita/ubuntu-systemd:18.04
+    command: /sbin/init
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: {{ cookiecutter.role_name }}-1604
+    image: solita/ubuntu-systemd:16.04
+    command: /sbin/init
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
+  options:
+    D: True
   lint:
     name: ansible-lint
+    options:
+      R: true
+      r: ./node_modules/ansible-lint-rules/rules
 scenario:
   name: {{ cookiecutter.scenario_name }}
 verifier:
-  name: testinfra
+  name: goss
   lint:
-    name: flake8
+    name: yamllint
