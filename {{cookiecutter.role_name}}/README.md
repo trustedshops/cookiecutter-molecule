@@ -5,6 +5,7 @@ This is a rule to setup {{ cookiecutter.role_name | replace("ansible-", "") | re
 ## Requirements
 
 All python requirements are in `requirements.txt`
+Minimal Ansible version is: {{ cookiecutter.min_ansible_version }}
 
 ## Role Variables
 
