@@ -1,6 +1,6 @@
 # {{ cookiecutter.role_name | title | replace("-", " ") }}
 
-This is a rule to setup {{ cookiecutter.role_name | title | replace("ansible-", "") | replace("-", " ") }} on a unix system
+This is a rule to setup {{ cookiecutter.role_name | replace("ansible-", "") | replace("-", " ") | title }} on a unix system
 
 ## Requirements
 

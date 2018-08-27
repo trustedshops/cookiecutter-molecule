@@ -26,7 +26,7 @@ var/
 .molecule
 .kitchen
 .tfstate
-.backup 
+.backup
 .terraform
 
 .DS_Store
@@ -39,3 +39,4 @@ data/
 *.ipr
 *.iws
 atlassian-ide-plugin.xml
+package-lock.json
