@@ -11,17 +11,17 @@ platforms:
   - name: {{ cookiecutter.role_name }}-1804
     image: brandfrisch/ubuntu-18.04
     command: /sbin/init
-    capabilities:
-      - SYS_ADMIN
+    privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    docker_ssl_version: SSLv23
   - name: {{ cookiecutter.role_name }}-1604
     image: brandfrisch/ubuntu-16.04
     command: /sbin/init
-    capabilities:
-      - SYS_ADMIN
+    privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    docker_ssl_version: SSLv23
 provisioner:
   name: ansible
   options:
