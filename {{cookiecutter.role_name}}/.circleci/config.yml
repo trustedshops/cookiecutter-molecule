@@ -30,6 +30,7 @@ jobs:
                     export DOCKER_CERT_PATH_CERT=$DOCKER_CERT_PATH/cert.pem &&
                     export DOCKER_CERT_PATH_KEY=$DOCKER_CERT_PATH/key.pem &&
                     export DOCKER_SSL_VERSION=SSLv23 &&
+                    unset DOCKER_TLS_VERIFY &&
                     molecule test"
 
   release:
