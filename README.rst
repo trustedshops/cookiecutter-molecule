@@ -14,7 +14,7 @@ Usage
 ::
 
     $ pip install cookiecutter
-    $ cookiecutter gh:retr0h/cookiecutter-molecule
+    $ cookiecutter gh:trustedshops/cookiecutter-molecule
 
 License
 -------
